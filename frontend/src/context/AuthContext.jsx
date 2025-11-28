@@ -4,7 +4,8 @@ import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
-const API_URL = import.meta.env.VITE_BACKEND_URL + '/api' || "http://localhost:8000/api"; 
+const API_URL = (import.meta.env.VITE_BACKEND_URL ? import.meta.env.VITE_BACKEND_URL + '/api' : "http://localhost:8000/api");
+ 
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")) || null);
