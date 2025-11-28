@@ -63,7 +63,7 @@ const PaymentPage = () => {
 
       /* ---------------- CREATE BOOKING REQUEST ---------------- */
       const res = await axios.post(
-        "http://localhost:8000/api/bookings",
+        "https://flight-booking-1-0xto.onrender.com/api/bookings",
         {
           flightId: flight._id, // ✅ FIXED
           passengers: formattedPassengers,

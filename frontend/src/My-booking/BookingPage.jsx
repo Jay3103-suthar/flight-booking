@@ -21,10 +21,11 @@ const BookingPage = () => {
   ]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/api/flights/${flightId}`)
-      .then((res) => setFlight(res.data))
-      .catch((err) => console.error("Error loading flight:", err));
+   axios
+    .get(`https://flight-booking-1-0xto.onrender.com/api/flights/${flightId}`)
+    .then((res) => setFlight(res.data))
+    .catch((err) => console.error("Error loading flight:", err));
+
   }, [flightId]);
 
   const addPassenger = () => {

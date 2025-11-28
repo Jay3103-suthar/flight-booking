@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
-const API_URL = "http://localhost:8000/api";
+const API = import.meta.env.VITE_BACKEND_URL + "/api";
 
 const BookingManagement = () => {
     const { token } = useAuth();
@@ -13,7 +13,7 @@ const BookingManagement = () => {
     const fetchBookings = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(`${API_URL}/bookings/admin`, {
+            const res = await axios.get(`${API}/bookings/admin`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 

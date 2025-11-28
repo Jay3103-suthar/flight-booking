@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
-const API_URL = "http://localhost:8000/api/airports";
+const API = import.meta.env.VITE_BACKEND_URL + "/api/airports";
 
 const AirportManagement = () => {
     const { token } = useAuth();
@@ -16,9 +16,7 @@ const AirportManagement = () => {
     const fetchAirports = async () => {
         setLoading(true);
         try {
-            // GET /api/airports does not require isAdmin, only GET /api/airports/:id does.
-            // But we will use the token just in case.
-            const res = await axios.get(API_URL, {
+            const res = await axios.get(API, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             setAirports(res.data);
@@ -43,19 +41,19 @@ const AirportManagement = () => {
         setError('');
         try {
             if (isEditing) {
-                await axios.put(`${API_URL}/${editingId}`, formData, {
+                await axios.put(`${API}/${editingId}`, formData, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
             } else {
-                await axios.post(API_URL, formData, {
+                await axios.post(API, formData, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
             }
-            // Reset form and state
+
             setFormData({ airportName: '', airportCode: '', city: '', country: '' });
             setIsEditing(false);
             setEditingId(null);
-            fetchAirports(); // Refresh list
+            fetchAirports();
         } catch (err) {
             setError(err.response?.data?.message || err.message || "Failed to save airport.");
         }
@@ -76,7 +74,7 @@ const AirportManagement = () => {
         if (!window.confirm("Are you sure you want to delete this airport?")) return;
         setError('');
         try {
-            await axios.delete(`${API_URL}/${id}`, {
+            await axios.delete(`${API}/${id}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             fetchAirports();
@@ -92,10 +90,9 @@ const AirportManagement = () => {
             <h3 className="text-xl font-semibold mb-4 text-indigo-600">Airport Management</h3>
             {error && <p className="text-red-500 mb-4">{error}</p>}
             
-            {/* Airport Form */}
             <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-4 mb-6 p-4 border rounded">
-                <input type="text" name="airportName" value={formData.airportName} onChange={handleChange} placeholder="Name (e.g., Indira Gandhi Intl.)" required className="p-2 border rounded" />
-                <input type="text" name="airportCode" value={formData.airportCode} onChange={handleChange} placeholder="Code (e.g., DEL)" required className="p-2 border rounded uppercase" maxLength="3" />
+                <input type="text" name="airportName" value={formData.airportName} onChange={handleChange} placeholder="Name" required className="p-2 border rounded" />
+                <input type="text" name="airportCode" value={formData.airportCode} onChange={handleChange} placeholder="Code" required className="p-2 border rounded uppercase" maxLength="3" />
                 <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" required className="p-2 border rounded" />
                 <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" required className="p-2 border rounded" />
                 <button type="submit" className={`p-2 rounded font-bold text-white ${isEditing ? 'bg-orange-500 hover:bg-orange-600' : 'bg-green-500 hover:bg-green-600'}`}>
@@ -103,7 +100,6 @@ const AirportManagement = () => {
                 </button>
             </form>
 
-            {/* Airport List Table */}
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
@@ -125,7 +121,6 @@ const AirportManagement = () => {
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
                                     <button onClick={() => handleEdit(airport)} className="text-indigo-600 hover:text-indigo-900">Edit</button>
                                     <button onClick={() => handleDelete(airport._id)} className="text-red-600 hover:text-red-900">Delete</button>
-                                
                                 </td>
                             </tr>
                         ))}

@@ -58,9 +58,10 @@ const BookingSuccess = () => {
   const downloadTicket = async () => {
     try {
       const token = localStorage.getItem("token"); // make sure user is logged in
-      const res = await fetch(`http://localhost:8000/api/ticket/${booking._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+     const res = await fetch(`https://flight-booking-1-0xto.onrender.com/api/ticket/${booking._id}`, {
+         headers: { Authorization: `Bearer ${token}` },
+    });
+
 
       if (!res.ok) throw new Error("Failed to download PDF");
 

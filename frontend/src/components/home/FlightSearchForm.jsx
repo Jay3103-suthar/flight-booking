@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const API_BASE_URL = 'http://localhost:8000/api'; // Matches your server port/prefix
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL + '/api';// Matches your server port/prefix
 
 function FlightSearchForm({ onSearch }) {
   const [airports, setAirports] = useState([]);

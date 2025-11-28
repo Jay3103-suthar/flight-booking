@@ -26,7 +26,7 @@ const MyBookings = () => {
   useEffect(() => {
     const fetchMyBookings = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/api/bookings/my", {
+        const res = await axios.get("https://flight-booking-1-0xto.onrender.com/api/bookings/my", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -2,10 +2,8 @@
 
 import axios from 'axios';
 
-// Base URL for your running backend server
-const BASE_URL = "http://localhost:8000/api"; 
-
-
+// Base URL from Vite environment
+const BASE_URL = import.meta.env.VITE_BACKEND_URL + '/api';
 
 // 1. Service for fetching ALL or filtered flights
 export const searchFlights = async ({ fromId, toId, departureDate }) => {
@@ -16,7 +14,6 @@ export const searchFlights = async ({ fromId, toId, departureDate }) => {
     try {
         const response = await axios.get(`${BASE_URL}/flights/search`, {
             params: {
-                // Pass IDs and date only if they are available (for filtering)
                 from: fromId || undefined, 
                 to: toId || undefined,     
                 date: formattedDate || undefined,
@@ -53,6 +50,7 @@ export const searchAirports = async (query = '') => {
     }
     
 };
+
 // 3. Get single flight by ID
 export const getFlightById = async (id) => {
     try {
