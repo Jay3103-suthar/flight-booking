@@ -28,7 +28,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // local dev
-      "https://flight-booking-chi-steel.vercel.app", // deployed frontend
+      "https://flight-booking-six-eta.vercel.app/admin/login", // deployed frontend
     ],
     credentials: true,
   })
