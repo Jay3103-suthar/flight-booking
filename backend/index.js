@@ -26,11 +26,13 @@ const app = express();
 // ===== MIDDLEWARE =====
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://your-frontend-vercel-url.vercel.app"],
+    origin: [
+      "http://localhost:5173", // local dev
+      "https://flight-booking-chi-steel.vercel.app", // deployed frontend
+    ],
     credentials: true,
   })
 );
-
 app.use(express.json());
 
 // ===== CONNECT DB =====
