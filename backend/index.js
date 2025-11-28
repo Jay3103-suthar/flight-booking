@@ -28,11 +28,12 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // local dev
-      "https://flight-booking-six-eta.vercel.app/admin/login", // deployed frontend
+      "https://flight-booking-six-eta.vercel.app", // deployed frontend
     ],
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 // ===== CONNECT DB =====
