@@ -4,7 +4,7 @@ import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
-const API_URL = (import.meta.env.VITE_BACKEND_URL ? import.meta.env.VITE_BACKEND_URL + '/api' : "http://localhost:8000/api");
+const API_URL = (import.meta.env.VITE_BACKEND_URL ? import.meta.env.VITE_BACKEND_URL : "http://localhost:8000");
  
 
 export const AuthProvider = ({ children }) => {
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         setLoading(true);
         try {
-            const res = await axios.post(`${API_URL}/auth/login`, { email, password });
+            const res = await axios.post(`${API_URL}/api/auth/login`, { email, password });
 
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("user", JSON.stringify(res.data.user));
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     // =========================================
     const register = async (formData) => {
         try {
-            const res = await axios.post(`${API_URL}/auth/register`, formData);
+            const res = await axios.post(`${API_URL}/api/auth/register`, formData);
             return res.data;
         } catch (error) {
             throw error.response?.data?.message || "Registration failed";
